@@ -1,22 +1,14 @@
 <template>
   <!-- 首页 -->
   <div>
-    <article>
-      <el-card>
-        <div slot="header" class="clearfix">
-          <span style="font-weight:bold;font-size:20px">
-            {{ subjectDetail.title || "-" }}
-          </span>
-          <el-tag size="mini">{{ subjectDetail.typeDesc }}</el-tag>
-          <el-button
-            @click="showAnswer"
-            type="primary"
-            size="mini"
-            style="float: right;"
-          >
-            显示答案
-          </el-button>
-        </div>
+    <div class="top">
+      <h1>{{ subjectDetail.title || "-" }}</h1>
+      <div class="info">
+        <el-tag size="mini">{{ subjectDetail.typeDesc }}</el-tag>
+      </div>
+    </div>
+    <div class="container">
+      <article class="article">
         <section
           v-for="paragraph in subjectDetail.paragraphs"
           :key="paragraph.content"
@@ -24,13 +16,19 @@
         >
           {{ paragraph.content }}
         </section>
-      </el-card>
-      <el-card>
+      </article>
+      <aside class="aside">
+        <div>
+          <el-button @click="showAnswer" type="primary" size="mini">
+            提交答案
+          </el-button>
+        </div>
         <div
           v-for="(exercises, index) in subjectDetail.exercisesArr"
           :key="exercises.content"
         >
-          <p>{{ index + 1 }}.{{ exercises.content }}</p>
+          <p>{{ index + 1 }}. {{ exercises.content }}</p>
+          {{ exercises.result }}
           <div style="margin-left:10px;line-height: 40px;">
             <el-radio-group v-model="exercises.radio">
               <el-radio label="A">A. True</el-radio>
@@ -39,8 +37,8 @@
             </el-radio-group>
           </div>
         </div>
-      </el-card>
-    </article>
+      </aside>
+    </div>
   </div>
 </template>
 
@@ -109,10 +107,44 @@ export default {
         exercisesArr: [
           {
             content: `Holonyak's colleagues thought he would fail in his research on LEDs at the time when he started it.`,
-            radio: ""
+            radio: "",
+            result: "A",
+            analysis: "我是分析"
           },
           {
             content: `Holonyak believed that his students that were working with him on the project would get the Lemelson MIT Prize sooner or later.`,
+            radio: ""
+          },
+          {
+            content: `Holonyak was the inventor of transisitor in the early 1950s`,
+            radio: ""
+          },
+          {
+            content: `LEDs used in traffic lights are developed by  Holonyak's students.`,
+            radio: ""
+          },
+          {
+            content: `When Holonyak invented LEDs, he belived that they would have a wide range of uses.`,
+            radio: ""
+          },
+          {
+            content: `Holonyak said that you should not do anything you are not interested in.`,
+            radio: ""
+          },
+          {
+            content: `LEDs are more environmentally friendly than incandescent bulbs.`,
+            radio: ""
+          },
+          {
+            content: `Holonyak was surprised to receive the Lemelson-MIT Prize.`,
+            radio: ""
+          },
+          {
+            content: `Edith Flanigen was also awarded Lemelson-MIT Prize for his work on LEDs`,
+            radio: ""
+          },
+          {
+            content: `The Lemeson-MIT Prize has a history of over 100  years.`,
             radio: ""
           }
         ]
@@ -126,13 +158,33 @@ export default {
 </script>
 
 <style lang="less" scoped>
-article {
-  margin: 20px;
-  .paragraph-sec {
-    text-indent: 2em;
-    line-height: 30px;
-    // 设置字母间距，仿语雀
-    letter-spacing: 0.05em;
+.top {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  .info {
+    margin-left: 10px;
+  }
+}
+.container {
+  display: flex;
+  padding: 0 20px 20px;
+  .article {
+    width: 60%;
+    box-sizing: border-box;
+    padding-right: 20px;
+    .paragraph-sec {
+      text-indent: 2em;
+      line-height: 30px;
+      // 设置字母间距，仿语雀
+      letter-spacing: 0.05em;
+    }
+  }
+  .aside {
+    width: 40%;
+    p {
+      margin: 0;
+    }
   }
 }
 </style>
